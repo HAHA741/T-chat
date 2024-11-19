@@ -1,10 +1,10 @@
 import { fetchData, fetchStream } from "./api";
 
 export default {
-  login() {
-    return fetchData();
+  login(data) {
+    return fetchData("/api/user/login","post",data);
   },
   register(data) {
-    return fetchData("/user/register", "POST", data);
+    return fetchData("/user/register", "post", data);
   },
 };

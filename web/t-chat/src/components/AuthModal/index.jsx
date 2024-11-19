@@ -15,7 +15,7 @@ const AuthModal = ({ isOpen, onClose }) => {
       ...form,
     };
     _form[key] = val;
-    console.log(_form, "_form");
+    // console.log(_form, "_form");
     setForm(_form);
   };
 
@@ -30,6 +30,9 @@ const AuthModal = ({ isOpen, onClose }) => {
     if (isLogin) {
       //   console.log("登录手机号:", phoneNumber, "密码:", password);
       // 添加登录逻辑
+      api.login(form).then(res=>{
+        console.log(res)
+      })
     } else {
       api.register(form).then((res) => {
         console.log(res);
