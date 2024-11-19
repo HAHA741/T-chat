@@ -1,0 +1,11 @@
+info:
+  contact: {}
+paths:
+  /Tchat/communication:
+    get:
+      description: 返回gpt对话流
+      produces:
+      - application/json
+      responses: {}
+      summary: AI对话
+swagger: "2.0"

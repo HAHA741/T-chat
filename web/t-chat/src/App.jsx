@@ -3,6 +3,7 @@ import Sidebar from "./components/Sidebar";
 import ChatHeader from "./components/ChatHeader";
 import ChatWindow from "./components/ChatWindow";
 import MessageInput from "./components/MessageInput";
+import AuthModal from "./components/AuthModal";
 import "./App.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <ChatHeader />
         <ChatWindow messages={messages} />
         <MessageInput onSendMessage={handleSendMessage} />
+        <AuthModal isOpen={true} />
       </div>
     </div>
   );

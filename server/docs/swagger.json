@@ -1,0 +1,18 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/Tchat/communication": {
+            "get": {
+                "description": "返回gpt对话流",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "AI对话",
+                "responses": {}
+            }
+        }
+    }
+}

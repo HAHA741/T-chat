@@ -39,7 +39,7 @@ func main() {
 	}()
 
 	// Initialize Redis
-	err = common.InitRedisClient()
+	// err = common.InitRedisClient()
 	if err != nil {
 		common.FatalLog(err)
 	}

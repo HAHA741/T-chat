@@ -2,13 +2,14 @@ package common
 
 import (
 	"context"
-	"github.com/go-redis/redis/v8"
 	"os"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 var RDB *redis.Client
-var RedisEnabled = true
+var RedisEnabled = false
 
 // InitRedisClient This function is called after init()
 func InitRedisClient() (err error) {

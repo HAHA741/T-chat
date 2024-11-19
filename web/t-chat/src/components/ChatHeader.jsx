@@ -1,6 +1,8 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
 function ChatHeader() {
+  const showAuth = () => {};
   return (
     <div className="chat-header">
       <h2>ChatGPT</h2>

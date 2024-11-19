@@ -57,7 +57,7 @@ func GptQingYan(message model.AIMessage, wg *sync.WaitGroup) (response model.ZHI
 				break
 			}
 		}
-		fmt.Printf("Received: %s\n", string(buf[:n]))
+		fmt.Printf("Received: %s\n", string(data[:n]))
 
 	}
 	defer resp.Body.Close()

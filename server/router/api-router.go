@@ -1,8 +1,10 @@
 package router
 
 import (
+	"fmt"
 	"gin-template/controller"
 	"gin-template/middleware"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,6 +24,7 @@ func SetApiRouter(router *gin.Engine) {
 		apiRouter.GET("/oauth/email/bind", middleware.CriticalRateLimit(), middleware.UserAuth(), controller.EmailBind)
 
 		userRoute := apiRouter.Group("/user")
+		//
 		{
 			userRoute.POST("/register", middleware.CriticalRateLimit(), middleware.TurnstileCheck(), controller.Register)
 			userRoute.POST("/login", middleware.CriticalRateLimit(), controller.Login)
@@ -37,7 +40,7 @@ func SetApiRouter(router *gin.Engine) {
 			}
 
 			adminRoute := userRoute.Group("/")
-			adminRoute.Use(middleware.AdminAuth(), middleware.NoTokenAuth())
+			// adminRoute.Use(middleware.AdminAuth(), middleware.NoTokenAuth())
 			{
 				adminRoute.GET("/", controller.GetAllUsers)
 				adminRoute.GET("/search", controller.SearchUsers)
@@ -62,5 +65,14 @@ func SetApiRouter(router *gin.Engine) {
 			fileRoute.POST("/", middleware.UploadRateLimit(), controller.UploadFile)
 			fileRoute.DELETE("/:id", controller.DeleteFile)
 		}
+		tChatRoute := apiRouter.Group("/chat")
+		{
+			tChatRoute.GET("/communication", controller.Communication)
+		}
 	}
+	// 打印所有路由信息
+	for _, route := range router.Routes() {
+		fmt.Printf("方法: %s, 路径: %s, 处理器: %s\n", route.Method, route.Path, route.Handler)
+	}
+
 }

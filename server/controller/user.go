@@ -2,14 +2,16 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"gin-template/common"
 	"gin-template/model"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 type LoginRequest struct {
@@ -119,6 +121,7 @@ func Register(c *gin.Context) {
 		})
 		return
 	}
+	fmt.Println("1234")
 	var user model.User
 	err := json.NewDecoder(c.Request.Body).Decode(&user)
 	if err != nil {
