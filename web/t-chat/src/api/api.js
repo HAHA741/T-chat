@@ -1,9 +1,12 @@
 // axiosInstance.js
 import axios from "axios";
 
+export const navigateTo = (path) => {
+  window.location.replace(path)
+};
 // 创建 axios 实例
 const axiosInstance = axios.create({
-  baseURL: "api", // 修改为你的后端 API 地址
+  baseURL: "/api", // 修改为你的后端 API 地址
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -56,6 +59,7 @@ export const fetchStream = async (url, onChunk, config = {}) => {
   }
 };
 export async function postEventStream(url, data, fn) {
+  
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -64,7 +68,14 @@ export async function postEventStream(url, data, fn) {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(data),
-  });
+  })
+  if(response.status==401){
+    console.log("权限不足")
+    navigateTo("/")
+    return 
+
+  }
+
 
   if (!response.body) {
     throw new Error("ReadableStream not supported in this browser.");

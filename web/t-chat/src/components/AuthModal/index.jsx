@@ -3,11 +3,11 @@ import api from "@/api/index.js";
 import "./AuthModal.css";
 
 const AuthModal = ({ isOpen, onClose }) => {
-  const [isLogin, setIsLogin] = useState(true); // true表示登录，false表示注册
+  const [isLogin, setIsLogin] = useState(false); // true表示登录，false表示注册
   //   const [phoneNumber, setPhoneNumber] = useState("");
   //   const [password, setPassword] = useState("");
   const [form, setForm] = useState({
-    userName: "",
+    username: "",
     password: "",
   });
   const setFormKey = (key, val) => {
@@ -21,24 +21,15 @@ const AuthModal = ({ isOpen, onClose }) => {
 
   const handleToggle = () => {
     setIsLogin(!isLogin);
-    setPhoneNumber("");
-    setPassword("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin) {
-      //   console.log("登录手机号:", phoneNumber, "密码:", password);
       // 添加登录逻辑
       let { data } = await api.login(form);
       localStorage.setItem("token", data);
       let res = await api.getUserInfo();
-      //   api.login(form).then((res) => {
-      //     if (res.data) {
-      //       localStorage.setItem("token", res.data);
-      //       api.getUserInfo()
-      //     }
-      //   });
     } else {
       api.register(form).then((res) => {
         console.log(res);
@@ -61,7 +52,7 @@ const AuthModal = ({ isOpen, onClose }) => {
             <input
               type="text"
               value={form.userName}
-              onChange={(e) => setFormKey("userName", e.target.value)}
+              onChange={(e) => setFormKey("username", e.target.value)}
               placeholder="请输入用户名"
               required
             />

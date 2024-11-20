@@ -1,20 +1,25 @@
-import React, { useState } from "react";
-// import Sidebar from "./components/Sidebar";
-// import ChatHeader from "./components/ChatHeader";
-// import ChatWindow from "./components/ChatWindow";
-// import MessageInput from "./components/MessageInput";
-// import AuthModal from "./components/AuthModal";
-import "./App.css";
+import React, { useState,useEffect } from "react";
+import Sidebar from "@/components/Sidebar";
+import ChatHeader from "@/components/ChatHeader";
+import ChatWindow from "@/components/ChatWindow";
+import MessageInput from "@/components/MessageInput";
+import AuthModal from "@/components/AuthModal";
+import "@/App.css";
 import api from "@/api/index.js";
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from "@/views/home"
+
 
 function App() {
   const [messages, setMessages] = useState([]);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const onClose = () => {
     setIsOpen(false);
   };
+  useEffect(()=>{
+    if(!localStorage.getItem('token')){
+        setIsOpen(true)
+    }
+
+  },[])
   function comResponse(val) {
     let _val = JSON.parse(val);
     setMessages((pre) => {
@@ -45,12 +50,8 @@ function App() {
   };
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home/>}/>
-      </Routes>
-    
-    {/* <div className="app">
+   
+          <div className="app">
       <Sidebar />
       <div className="chat-container">
         <ChatHeader />
@@ -58,9 +59,9 @@ function App() {
         <MessageInput onSendMessage={handleSendMessage} />
         <AuthModal isOpen={isOpen} onClose={onClose} />
       </div>
-    </div> */}
+    </div>
 
-    </Router>
+    
 
   );
 }
