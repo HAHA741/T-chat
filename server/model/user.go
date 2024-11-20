@@ -23,6 +23,14 @@ type User struct {
 	Integral         int    `json:"integral" gorm:"integral"`       //积分
 	Phone            int    `json:"phone" gorm:"phone"`             //手机号
 }
+type UserInfo struct {
+	Username    string `json:"username" gorm:"unique;index" validate:"max=12"`
+	DisplayName string `json:"display_name" gorm:"index" validate:"max=20"`
+	Role        int    `json:"role" gorm:"type:int;default:1"`   // admin, common
+	Status      int    `json:"status" gorm:"type:int;default:1"` // enabled, disabled
+	Integral    int    `json:"integral" gorm:"integral"`         //积分
+	Phone       int    `json:"phone" gorm:"phone"`               //手机号
+}
 
 func GetMaxUserId() int {
 	var user User

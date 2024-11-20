@@ -5,7 +5,7 @@ function ChatHeader() {
   const showAuth = () => {};
   return (
     <div className="chat-header">
-      <h2>ChatGPT</h2>
+      <h2>Tchat</h2>
       <div className="header-actions">
         <button>分享</button>
         <div className="avatar">W</div>

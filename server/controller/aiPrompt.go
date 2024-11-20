@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"gin-template/model"
 	"gin-template/service"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +12,16 @@ import (
 // @Produce  json
 // @Router /chat/communication [get]
 func Communication(c *gin.Context) {
-	prompt := c.DefaultQuery("prompt", "")
-	service.Communication(prompt)
+	var communication model.Communication
+	if err := c.ShouldBindJSON(&communication); err != nil {
+		c.JSON(400, gin.H{"error": err.Error()})
+		return
+	}
+	// prompt := c.DefaultQuery("prompt", "")
+	service.Communication(c, communication)
+	// c.JSON(http.StatusOK, gin.H{
+	// 	"success": true,
+	// 	"message": "",
+	// 	"data":    response,
+	// })
 }

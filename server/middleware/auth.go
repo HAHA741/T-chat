@@ -3,9 +3,10 @@ package middleware
 import (
 	"gin-template/common"
 	"gin-template/model"
+	"net/http"
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func authHelper(c *gin.Context, minRole int) {
@@ -64,6 +65,11 @@ func authHelper(c *gin.Context, minRole int) {
 	c.Set("id", id)
 	c.Set("authByToken", authByToken)
 	c.Next()
+}
+func AllAuth() func(c *gin.Context) {
+	return func(c *gin.Context) {
+		TokenMiddleware(c)
+	}
 }
 
 func UserAuth() func(c *gin.Context) {

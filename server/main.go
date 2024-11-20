@@ -3,7 +3,6 @@ package main
 import (
 	"embed"
 	"gin-template/common"
-	"gin-template/middleware"
 	"gin-template/model"
 	"gin-template/router"
 	"log"
@@ -50,7 +49,7 @@ func main() {
 	// Initialize HTTP server
 	server := gin.Default()
 	//server.Use(gzip.Gzip(gzip.DefaultCompression))
-	server.Use(middleware.CORS())
+	// server.Use(middleware.CORS())
 
 	// Initialize session store
 	if common.RedisEnabled {
