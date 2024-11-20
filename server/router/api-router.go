@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gin-template/controller"
 	"gin-template/middleware"
+	"gin-template/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,8 +32,9 @@ func SetApiRouter(router *gin.Engine) {
 			userRoute.GET("/logout", controller.Logout)
 
 			selfRoute := userRoute.Group("/")
-			selfRoute.Use(middleware.UserAuth(), middleware.NoTokenAuth())
+			selfRoute.Use(middleware.AllAuth())
 			{
+				selfRoute.GET("/userInfo", service.GetUserInfo)
 				selfRoute.GET("/self", controller.GetSelf)
 				selfRoute.PUT("/self", controller.UpdateSelf)
 				selfRoute.DELETE("/self", controller.DeleteSelf)
@@ -40,7 +42,7 @@ func SetApiRouter(router *gin.Engine) {
 			}
 
 			adminRoute := userRoute.Group("/")
-			// adminRoute.Use(middleware.AdminAuth(), middleware.NoTokenAuth())
+			adminRoute.Use(middleware.AdminAuth(), middleware.NoTokenAuth())
 			{
 				adminRoute.GET("/", controller.GetAllUsers)
 				adminRoute.GET("/search", controller.SearchUsers)
@@ -66,8 +68,9 @@ func SetApiRouter(router *gin.Engine) {
 			fileRoute.DELETE("/:id", controller.DeleteFile)
 		}
 		tChatRoute := apiRouter.Group("/chat")
+		tChatRoute.Use(middleware.AllAuth())
 		{
-			tChatRoute.GET("/communication", controller.Communication)
+			tChatRoute.POST("/communication", controller.Communication)
 		}
 	}
 	// 打印所有路由信息

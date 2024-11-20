@@ -25,14 +25,20 @@ const AuthModal = ({ isOpen, onClose }) => {
     setPassword("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLogin) {
       //   console.log("登录手机号:", phoneNumber, "密码:", password);
       // 添加登录逻辑
-      api.login(form).then(res=>{
-        console.log(res)
-      })
+      let { data } = await api.login(form);
+      localStorage.setItem("token", data);
+      let res = await api.getUserInfo();
+      //   api.login(form).then((res) => {
+      //     if (res.data) {
+      //       localStorage.setItem("token", res.data);
+      //       api.getUserInfo()
+      //     }
+      //   });
     } else {
       api.register(form).then((res) => {
         console.log(res);

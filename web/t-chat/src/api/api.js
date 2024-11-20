@@ -55,6 +55,47 @@ export const fetchStream = async (url, onChunk, config = {}) => {
     throw error;
   }
 };
+export async function postEventStream(url, data, fn) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "text/event-stream", // 指定返回事件流
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.body) {
+    throw new Error("ReadableStream not supported in this browser.");
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder("utf-8");
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    buffer += decoder.decode(value, { stream: true });
+
+    // 按行分割处理，模拟 text/event-stream 事件流格式
+    const lines = buffer.split("\n");
+    buffer = lines.pop(); // 保留未处理完的部分
+
+    for (const line of lines) {
+      if (line.startsWith("data: ")) {
+        const eventData = line.slice(6);
+        // console.log("Received event data:", eventData);
+        fn(eventData);
+      }
+    }
+  }
+}
+
+// 调用示例
+// postEventStream("https://your-server-url.com/api/stream", { key: "value" });
 
 // 取消请求的支持
 export const createCancelToken = () => axios.CancelToken.source();

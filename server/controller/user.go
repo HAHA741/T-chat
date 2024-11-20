@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"gin-template/common"
+	"gin-template/middleware"
 	"gin-template/model"
 	"net/http"
 	"strconv"
@@ -57,7 +58,16 @@ func Login(c *gin.Context) {
 		})
 		return
 	}
-	setupLogin(&user, c)
+	token, err := middleware.GenerateToken(user.Id)
+	if err != nil {
+		println("token生成异常")
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "",
+		"success": true,
+		"data":    token,
+	})
+	// setupLogin(&user, c)
 }
 
 // setup session & cookies and then return user info
